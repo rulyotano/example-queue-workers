@@ -1,0 +1,35 @@
+version: "3.9"
+services:
+  producer:
+    image: ${DOCKER_REGISTRY-}sample-queue-producer
+    build:
+      context: producer
+      target: prod
+    ports:
+      - "3002:80"
+    environment:
+      - Rabbit__Host=rabbit
+      - Rabbit__User=rabbit
+      - Rabbit__Password=P@ssw0rd
+
+  worker:
+    image: ${DOCKER_REGISTRY-}sample-queue-worker
+    restart: always
+    build:
+      context: worker
+      target: prod
+    environment:
+      - Rabbit__Host=rabbit
+      - Rabbit__User=rabbit
+      - Rabbit__Password=P@ssw0rd
+    deploy:
+      replicas: 8
+
+  rabbit:
+    image: rabbitmq:3.12.6-management
+    environment:
+      - RABBITMQ_DEFAULT_USER=rabbit
+      - RABBITMQ_DEFAULT_PASS=P@ssw0rd
+    ports:
+      - 8081:15671
+      - 8082:15672
