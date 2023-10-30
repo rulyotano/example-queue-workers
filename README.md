@@ -1,4 +1,4 @@
-# Sample Worker Message Queue
+# Example Worker Message Queue
 
 Create a message queue to simulate long tasks running in dotnet using RabbitMq.
 These long running task can vary, for example process big files (or files in general), web crawler, db migrations, conciliation processes between 2 ledgers, etc. This code is meant to be as simple as possible.
